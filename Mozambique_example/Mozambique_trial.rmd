@@ -1,0 +1,147 @@
+---
+title: "Pfpr_visual"
+author: "Qian"
+date: "9/27/2018"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## loading library
+```{r}
+require("rgdal") 
+require("maptools")
+require("ggplot2")
+require("plyr")
+require("raster")
+```
+## Reading the A2 units
+```{r}
+s <- readOGR("/Users/qianzh/project/Tiling/data/gadm36_2.shp")
+# Africa <- c("Algeria",  "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", 
+#             "Cape Verde", "Cameroon", "Central African Republic", "Chad", "Comoros",
+#             "Democratic Republic of the Congo", "Republic of Congo", "Côte d'Ivoire", 
+#             "Djibouti", "Egypt", "Equatorial Guinea", "Guinea", "Eritrea", "Swaziland",
+#             "Ethiopia","Gabon", "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Kenya", "Lesotho", 
+#             "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius",
+#             "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Rwanda", 
+#             "São Tomé and Príncipe", "Senegal", "Seychelles", "Sierra Leone", 
+#             "Somalia", "South Africa", "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia", 
+#             "Uganda", "Zambia", "Zimbabwe")
+```
+
+## Extract Mozambique area
+```{r}
+Mozambique_a2 <- s[s$NAME_0 == "Mozambique", ]
+```
+
+## Check the A2 units for Mozambique
+```{r}
+summary(Mozambique_a2)
+```
+
+```{r}
+plot(Mozambique_a2)
+```
+
+## Loading PfPR data
+```{r}
+PfPR <- raster("/Users/qianzh/project/Tiling/data/global_Pf_Prevalence_all_ages_2000-2016/global_PfPR_all_ages_2016.tif")
+plot(PfPR)
+```
+
+## Loading world population
+
+```{r}
+population <- raster("/Users/qianzh/project/Tiling/data/population/worldpop_total_1y_2016_00_00.tif")
+```
+
+
+
+```{r}
+pf_count <- raster("/Users/qianzh/project/Tiling/data/global_Pf_Prevalence_all_ages_2000-2016/global_Pf_count_all_ages_2016.tif")
+```
+
+##Raster to points
+```{r}
+points_pfpr <- rasterToPoints(PfPR)
+points_pf_counts <- rasterToPoints(pf_count)
+```
+## extract population information from population raster for all points in points_pfpr
+```{r}
+points_pfpr_pop <- as.data.frame(extract(population, points_pfpr[,1:2], fun = 'sum', na.rm = TRUE))
+```
+
+```{r}
+points_pfpr <- as.data.frame(points_pfpr)
+points_pfpr['population'] <- points_pfpr_pop
+```
+## calculate product
+```{r}
+points_pfpr['pf_prevalence_counts'] = points_pfpr['population'] * points_pfpr['global_PfPR_all_ages_2016']
+```
+
+```{r}
+points_pf_counts<- as.data.frame(points_pf_counts)
+```
+
+```{r}
+require(dplyr)
+Moz_pf_counts <- points_pf_counts %>% filter(x >= 30.21741 & x <= 40.83931 & y >= -26.86869 & y <= -10.47125  )
+```
+
+## reproject the polygons and pts 
+```{r}
+require(sp)
+pts <-data.frame(Moz_pf_counts[,1:2])
+coordinates(pts) <- ~ x + y
+
+MozA2_wgs84 <- spTransform(Mozambique_a2, CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"))
+proj4string(pts) <- proj4string(MozA2_wgs84)
+
+
+```
+
+## filter out the pts outside Mozambique
+
+```{r}
+Moz_pts_index <- !is.na(over(pts, as(MozA2_wgs84, "SpatialPolygons")))
+
+Moz_pf_counts_new <- Moz_pf_counts[Moz_pts_index,]
+Moz_pts <- pts[Moz_pts_index]
+```
+
+
+```{r}
+library(leaflet)
+
+Moz_pts$counts <- Moz_pf_counts_new$global_Pf_count_all_ages_2016
+
+qpal <- colorBin(c("Blue", "Red"), Moz_pts$counts, bins=c(0,50,100,150,200,300,400,500,1000, 2000, 5000,10000,20000, 30000, 40000, 50000, 65000))
+
+leaflet(Moz_pts) %>% addTiles() %>%
+  addCircleMarkers(color = 'white',
+    fillColor = ~qpal(counts), 
+    stroke = FALSE, radius = 5
+  )%>%
+  addLegend(values=~counts,pal=qpal,title="Pf Counts")
+```
+
+
+## Add A2 units
+```{r}
+leaflet(Moz_pts) %>% addTiles() %>%
+  addCircleMarkers(color = 'white',
+                   fillColor = ~qpal(counts), 
+                   stroke = FALSE, radius = 5
+  )%>%
+  addLegend(values=~counts,pal=qpal,title="Pf Counts") %>% 
+  addPolygons(data=MozA2_wgs84, weight = 2, fillOpacity = 0, color = "grey")
+
+```
+
