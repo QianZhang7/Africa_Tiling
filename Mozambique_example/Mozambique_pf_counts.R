@@ -37,6 +37,9 @@ Moz_pts_index <- !is.na(over(pts, as(MozA2_wgs84, "SpatialPolygons")))
 Moz_pf_counts_new <- Moz_pf_counts[Moz_pts_index,]
 Moz_pts <- pts[Moz_pts_index]
 
+qpal <- colorBin(c("Blue", "Red"), Moz_pts$counts, 
+                 bins=c(0,50,100,150,200,300,400,500,1000, 2000, 5000,10000,20000, 30000, 40000, 50000, 65000))
+
 leaflet(Moz_pts) %>% addTiles() %>%
   addCircleMarkers(color = 'white',
                    fillColor = ~qpal(counts), 
