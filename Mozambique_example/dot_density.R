@@ -50,7 +50,7 @@ Moz_pf_counts_df_plot <- Moz_pf_counts_df %>% filter(num_dots > 0)
 
 coordinates(Moz_pf_counts_df_plot) <- ~ x + y
 qpal <- colorBin(c("blue", "red"), Moz_pf_counts_df$num_dots, alpha = TRUE,
-                 bins= c(1,2,4,6,8,10,20,30,40,50,100,400),)
+                 bins= c(1,2,4,6,8,10,20,30,40,50,100,400))
 
 
 
