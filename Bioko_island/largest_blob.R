@@ -46,8 +46,11 @@ Cluster=kmeans(para_urban_df, centers=6)
 para_urban$cluster <- Cluster$cluster
 
 
-pal_cluster <- colorFactor(palette = c("red", "blue", "green", "pink", "yellow", "orange"), domain = para_urban$cluster)
+pal_cluster <- colorFactor(palette = c("purple", "blue", "green", "cyan", "yellow", "orange"), domain = para_urban$cluster)
 
 leaflet(para_urban) %>% addTiles() %>%
-  addPolygons(data = para_urban,weight = 1, color = "grey", fillColor = ~pal_cluster(cluster))
+  addPolygons(data = para_urban,weight = 1, color = "grey", fillColor = ~pal_cluster(cluster)) %>%
+  addPolygons(data = red_urban,weight = 1, color = "grey", fillColor = "red")
 
+
+red_urban <- urban_poly[which(urban_poly$urban == 1),]
