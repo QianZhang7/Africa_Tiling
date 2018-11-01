@@ -1,5 +1,9 @@
 large_id <- which(com_cluster == 1920)
 urban_ele <- as.numeric(unlist(group_information[large_id]))
+#single_poly <- which(rowSums(ad_cell) == 1)
+#urban_ele <- which(urban_ele)
+#'%!in%' <- function(x,y)!('%in%'(x,y))
+#urban_ele <- urban_ele %!in% single_poly
 urban_poly <- shp_15[urban_ele,]
 urban_poly$urban <- rep(NA, 1920)
 
