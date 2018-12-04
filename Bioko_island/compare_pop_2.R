@@ -14,30 +14,58 @@ plot(jrc_ghs, xlim = c(8.5, 9), ylim = c(3,4), main = "jrc_ghs for Bioko")
 
 shp_pop_raster <- rasterize(shp_pop, world_pop_2010, field = shp_pop@data$pop, fun = "mean", update = T, updateValue = "NA")
 
-landscan_d <- disaggregate(landscan, fact = c(626/63, 568/56))
-landscan_d <- landscan_d/100
 
-
-
-
-pop_vals <- data.frame(world_pop_2010=values(world_pop_2010),
-                       shp_pop_raster=values(shp_pop_raster))
 
 
 #########################################
 world_pop_bioko <- values(world_pop_2010)
-world_pop_bioko <- world_pop_bioko[!is.na(world_pop_bioko)]
-world_pop_bioko <- world_pop_bioko[world_pop_bioko!=0]
+#world_pop_bioko <- world_pop_bioko[!is.na(world_pop_bioko)]
+world_pop_bioko[is.na(world_pop_bioko)] <- 0
+
+world_pop_bioko_1km_raster <- crop(world_pop, extent(shp_wgs))
+world_pop_bioko_1km <- values(world_pop_bioko_1km_raster)
+#world_pop_bioko_1km <- world_pop_bioko[!is.na(world_pop_bioko_1km)]
+world_pop_bioko_1km[is.na(world_pop_bioko_1km)] <- 0
+
+
 mcdi_pop <- shp_pop$pop
+mcdi_pop[is.na(mcdi_pop)] <- 0
+
 landscan_pop <- values(landscan)
-landscan_pop <- landscan_pop[!is.na(landscan_pop)]/100
-landscan_pop <- landscan_pop[landscan_pop!=0]
+#landscan_pop <- landscan_pop[!is.na(landscan_pop)]
+landscan_pop[is.na(landscan_pop)] <- 0
 
-landscan_cdf <- ecdf(landscan_pop)
-worldpop_cdf <- ecdf(world_pop_bioko)
-mcdi_cdf <- ecdf(mcdi_pop)
+#landscan_cdf <- ecdf(landscan_pop/sum(landscan_pop))
+#worldpop_cdf <- ecdf(world_pop_bioko/sum(world_pop_bioko))
+#mcdi_cdf <- ecdf(mcdi_pop/sum(mcdi_pop))
+#worldpop_1km_cdf <- ecdf(world_pop_bioko_1km/sum(world_pop_bioko_1km))
 
-plot(landscan_cdf, verticals=TRUE, do.points=T, col = 'red', main = "cdf plots")
-plot(worldpop_cdf, verticals=TRUE, do.points=T, add=TRUE, col='green')
-plot(mcdi_cdf, verticals=TRUE, do.points=T, add=TRUE, col = 'blue')
-legend(250, 0.6, legend = c('landscan', 'worldpop', 'mcdi'), col = c('red', 'green', 'blue'), lty = 1, cex = 0.5)
+
+# par(mfrow=c(2,2))
+# plot(landscan_cdf, verticals=TRUE, do.points=T, col = 'red', main = "cdf plots for Landscan Population(1km)")
+# plot(worldpop_1km_cdf, verticals=TRUE, do.points=T, col = 'orange', main = "cdf plots for WorldPOP Population(1km)")
+# plot(worldpop_cdf, verticals=TRUE, do.points=T, col='green', main = "cdf plots for WorldPOP Population(100m)")
+# plot(mcdi_cdf, verticals=TRUE, do.points=T, col = 'blue', main = "cdf plots for MCDI Population(100m)")
+
+
+areaXpop.new = function(H, color, title){
+  sH = sort(H)
+  area = c(1:length(H))/length(H)
+  cdf = cumsum(sH)/sum(H)
+  plot(area, cdf, type ="l", col = color, main = title)
+}
+areaXpop = function(H, color){
+  sH = sort(H)
+  area = c(1:length(H))/length(H)
+  cdf = cumsum(sH)/sum(H)
+  lines(area, cdf, type ="l", col = color)
+}
+
+mcdi_pop_cdf = append(mcdi_pop,rep(0, (length(world_pop_bioko)-length(mcdi_pop))))
+par(xpd=FALSE)
+areaXpop.new(landscan_pop, color = "red", title = "Cdf plots")
+areaXpop(world_pop_bioko_1km,color = "orange")
+areaXpop(world_pop_bioko, color = "green")
+areaXpop(mcdi_pop_cdf, color = "blue")
+
+legend(0,1,c("Landscan:1km", "WorldPOP:1km", "WorldPOP:100m", "MCDI:100m"), col = c("red", "orange","green","blue"), lty = 1, cex = 0.6)
