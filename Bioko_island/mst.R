@@ -7,7 +7,7 @@ clu_urban <- igraph::components(g_urban)
 large_urban_id <- which(clu_urban$membership == 2)
 large_urban_poly <- urban_poly[large_urban_id,]
 
-large_urban_poly.nb <- poly2nb(large_urban_poly)
+large_urban_poly.nb <- poly2nb(large_urban_poly, queen = FALSE)
 summary(large_urban_poly.nb)
 plot(large_urban_poly,border=gray(.5))
 plot(large_urban_poly.nb,coordinates(large_urban_poly),col="blue",add=TRUE)
