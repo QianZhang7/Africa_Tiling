@@ -41,8 +41,8 @@ labels <- sprintf(
 pal_clu10 <- colorFactor(palette = c("red","green","blue","yellow", "pink", "cyan", "dodgerblue", "darkorange", "forestgreen", "lightgoldenrod4"), domain = large_urban_poly$clu10)
 map_mcdi <- leaflet(large_urban_poly) %>% addTiles() %>%
   addPolygons(data = large_urban_poly,weight = 1, color = "grey", fillColor = ~pal_clu10(clu10),
-              label = labels) %>%
-  addLegend(values=~clu10,pal=pal_clu10,title="Bioko: 10 clusters by using MCDI pop") 
+              label = labels) #%>%
+  #addLegend(values=~clu10,pal=pal_clu10,title="Bioko: 10 clusters by using MCDI pop") 
 
 
 
@@ -72,9 +72,9 @@ labels_world <- sprintf("population: %s",large_urban_poly$bioko_world_pop_2010) 
 
 pal_clu10_world <- colorFactor(palette = c("red","green","blue","yellow", "pink", "cyan", "dodgerblue", "darkorange", "forestgreen", "lightgoldenrod4"), domain = large_urban_poly$clu10_world)
 map_world <- leaflet(large_urban_poly) %>% addTiles() %>%
-  addPolygons(data = large_urban_poly,weight = 1, color = "grey", fillColor = ~pal_clu10(clu10_world),
-              label = labels_world) %>%
-  addLegend(values=~clu10_world,pal=pal_clu10_world,title="Bioko: 10 clusters by using worldpop") 
+  addPolygons(data = large_urban_poly,weight = 1, color = "grey", fillColor = ~pal_clu10_world(clu10_world),
+              label = labels_world) #%>%
+  #addLegend(values=~clu10_world,pal=pal_clu10_world,title="Bioko: 10 clusters by using worldpop") 
 
 
 
@@ -104,8 +104,9 @@ large_urban_poly$clu10_landscan <- clus10_landscan$groups
 labels_landscan <- sprintf("population: %s",large_urban_poly$bioko_landscan) %>% lapply(htmltools::HTML)
 
 pal_clu10_landscan <- colorFactor(palette = c("red","green","blue","yellow", "pink", "cyan", "dodgerblue", "darkorange", "forestgreen", "lightgoldenrod4"), domain = large_urban_poly$clu10_landscan)
-map_world <- leaflet(large_urban_poly) %>% addTiles() %>%
-  addPolygons(data = large_urban_poly,weight = 1, color = "grey", fillColor = ~pal_clu10_landscan(pal_clu10_landscan),
-              label = labels_landscan) %>%
-  addLegend(values=~clu10_landscan,pal=pal_clu10_landscan,title="Bioko: 10 clusters by using landscan") 
+map_landscan <- leaflet(large_urban_poly) %>% addTiles() %>%
+  addPolygons(data = large_urban_poly,weight = 1, color = "grey", fillColor = ~pal_clu10_landscan(clu10_landscan),
+              label = labels_landscan) #%>%
+  #addLegend(values=~clu10_landscan,pal=pal_clu10_landscan,title="Bioko: 10 clusters by using landscan") 
 
+sync(map_mcdi, map_world,map_landscan)

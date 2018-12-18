@@ -21,5 +21,9 @@ for (i in 1:204){
                              weighted.mean(shp_15_wt_df$y[idlist], shp_15_wt_df$pop[idlist]))
 }
 
-
+coordinates(wt_cent) = ~x+y
+leaflet(shp_15) %>% addTiles() %>%
+  addPolygons(data = shp_15, weight = 2, color = ~pal_population(pop),fillColor = ~pal_population(pop)) %>%
+  addLegend(values=~pop,pal=pal_population,title="Population in cells(Bioko)") %>%
+  addCircles(data = wt_cent, color = "green")
 
