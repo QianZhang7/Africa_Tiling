@@ -1,4 +1,4 @@
-cuts=c(0,1,10,100,1000,10000,100000)
+cuts=c(0,1,10,100,1000,10000)
 pal <- colorRampPalette(c("grey","khaki1", "yellow","orange", "red", "maroon"))
 
 par(mfrow = c(2,2))

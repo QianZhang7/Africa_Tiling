@@ -14,7 +14,7 @@ world_100_2010 <- crop(world_100_2010, extent(mcdi100_shp))
 world_100_2015 <- crop(world_100_2015, extent(mcdi100_shp))
 
 # read mcdi 1km
-mcdi1k_shp <- readOGR("project/Tiling/data/population/mcdi_1km/popareas.shp")
+mcdi1k_shp <- readOGR("project/Tiling/data/population/mcdi_1km/pop4Qian2.shp")
 mcdi1k_shp <- spTransform(mcdi1k_shp, CRS("+proj=longlat +datum=WGS84"))
 #proj4string(mcdi1k_shp) <- CRS("+proj=utm +zone=32 +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs +towgs84:0,0,0")
 
