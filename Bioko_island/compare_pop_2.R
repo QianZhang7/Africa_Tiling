@@ -10,7 +10,7 @@ plot(world_pop_2010, xlim = c(8.5, 9), ylim = c(3,4), main = "WorldPOP for Bioko
 cidr <- raster("project/Tiling/data/popgrid/popdynamics-pop-projection-ssp-2010-2100-ssp1-geotiff/SSP1/Total/GeoTIFF/ssp1_2010.tif")
 plot(cidr, xlim = c(8.5, 9), ylim = c(3,4), main = "CIDR for Bioko")
 jrc_ghs <- raster("project/Tiling/data/popgrid/GHS_POP_GPW42015_GLOBE_R2015A_54009_1k_v1_0/GHS_POP_GPW42015_GLOBE_R2015A_54009_1k_v1_0.tif")
-plot(jrc_ghs, xlim = c(8.5, 9), ylim = c(3,4), main = "jrc_ghs for Bioko")
+raster::plot(jrc_ghs, xlim = c(8.5, 9), ylim = c(3,4), main = "jrc_ghs for Bioko")
 
 shp_pop_raster <- rasterize(shp_pop, world_pop_2010, field = shp_pop@data$pop, fun = "mean", update = T, updateValue = "NA")
 
