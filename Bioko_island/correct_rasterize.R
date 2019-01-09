@@ -1,0 +1,13 @@
+library(sp)
+library(rgdal)
+library(rgeos)
+library(raster)
+library(RColorBrewer)
+mcdi1k_shp <- readOGR("project/Tiling/data/population/mcdi_1km/pop4Qian2.shp")
+mcdi1k_shp <- spTransform(mcdi1k_shp, CRS("+proj=longlat +datum=WGS84"))
+#proj4string(mcdi1k_shp) <- CRS("+proj=utm +zone=32 +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs +towgs84:0,0,0")
+mcdi1k_centers <- SpatialPointsDataFrame(gCentroid(mcdi1k_shp, byid=TRUE),data.frame(as.numeric(as.character(mcdi1k_shp$pop))), match.ID=FALSE)
+
+r <- raster(ncols=57, nrows=63)
+extent(r) <- extent(mcdi1k_shp)
+r1 <- rasterize(mcdi1k_centers, r, field = "as.numeric.as.character.mcdi1k_shp.pop..")
