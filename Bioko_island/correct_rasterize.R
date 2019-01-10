@@ -11,3 +11,6 @@ mcdi1k_centers <- SpatialPointsDataFrame(gCentroid(mcdi1k_shp, byid=TRUE),data.f
 r <- raster(ncols=57, nrows=63)
 extent(r) <- extent(mcdi1k_shp)
 r1 <- rasterize(mcdi1k_centers, r, field = "as.numeric.as.character.mcdi1k_shp.pop..")
+writeRaster(r1, filename="project/Tiling/data/population/mcdi1k.tif", format="GTiff", overwrite=TRUE)
+r2 <- raster("project/Tiling/data/population/mcdi1k.tif")
+plot(r2, xlim = c(8.4, 9), ylim = c(3,4), main = "MCDI(1km) for Bioko", breaks= cuts, col=c("gray50", brewer.pal(n = 6, name = "YlOrRd")), legend = F)
