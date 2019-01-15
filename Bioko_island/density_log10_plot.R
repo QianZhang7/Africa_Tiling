@@ -24,3 +24,13 @@ labels <- sapply(ticks, function(i) as.expression(bquote(10^ .(i))))
 axis(1, at=c(0, 1,2,3), labels=labels)
 
 legend(0,1,c("mcdi:100m", "WorldPOP:100m"), col = c("red", "orange"), lty = 1, cex = 0.6)
+
+
+
+logXpop.new(mcdi_500_2010, color = "red", title = "Cdf for 500m grids(aggregated)")
+logXpop(world_500_2010,color = "orange")
+ticks <- seq(0, 4, by=1)
+labels <- sapply(ticks, function(i) as.expression(bquote(10^ .(i))))
+axis(1, at=c(0, 1,2,3,4), labels=labels)
+
+legend(0,1,c("mcdi:100m", "WorldPOP:100m"), col = c("red", "orange"), lty = 1, cex = 0.6)
