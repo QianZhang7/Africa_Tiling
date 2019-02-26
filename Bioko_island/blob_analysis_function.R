@@ -1,7 +1,7 @@
 library(spdep)
 library(sp)
 library(igraph)
-blob_analysis_plot <- function(shapefile, pop_var, dataname){
+blob_analysis_plot <- function(shapefile, pop_var, dataname, color = color){
   nb <- poly2nb(shapefile, queen = F)
   mat <- nb2mat(nb, style="B", zero.policy = T)
   cell_num <- length(shapefile)
@@ -21,7 +21,7 @@ blob_analysis_plot <- function(shapefile, pop_var, dataname){
     com_cluster[i] <- length(group_information[[i]])
   }
   plot(log(com_cluster,10), log(popsum,10), main = paste(dataname, ":", clu$no, "blobs (4 directions)",sep = " "),
-       ylab = "Population in each blob", xlab = "Number of connected pixels in each blob", xaxt='n', yaxt='n', xlim = c(0, 3))
+       ylab = "Population in each blob", col = color,xlab = "Number of connected pixels in each blob", xaxt='n', yaxt='n', xlim = c(0, 3))
   xticks <- seq(0, 3, by=1)
   xlabels <- sapply(xticks, function(i) as.expression(bquote(10^ .(i))))
   axis(1, at=c(0, 1,2,3), labels=xlabels)
