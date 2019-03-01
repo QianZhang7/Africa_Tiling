@@ -21,13 +21,13 @@ blob_analysis_plot <- function(shapefile, pop_var, dataname, color = color){
     com_cluster[i] <- length(group_information[[i]])
   }
   plot(log(com_cluster,10), log(popsum,10), main = paste(dataname, ":", clu$no, "blobs (4 directions)",sep = " "),
-       ylab = "Population in each blob", col = color,xlab = "Number of connected pixels in each blob", xaxt='n', yaxt='n', xlim = c(0, 3))
-  xticks <- seq(0, 3, by=1)
+       ylab = "Population in each blob", col = color,xlab = "Number of connected pixels in each blob", xaxt='n', yaxt='n', xlim = c(0, 4), ylim= c(0,6))
+  xticks <- seq(0, 4, by=1)
   xlabels <- sapply(xticks, function(i) as.expression(bquote(10^ .(i))))
-  axis(1, at=c(0, 1,2,3), labels=xlabels)
-  yticks <- seq(0, 5, by=1)
+  axis(1, at=c(0, 1,2,3,4), labels=xlabels)
+  yticks <- seq(0, 6, by=1)
   ylabels <- sapply(yticks, function(i) as.expression(bquote(10^ .(i))))
-  axis(2, at=c(0, 1,2,3,4,5), labels=ylabels)
+  axis(2, at=c(0, 1,2,3,4,5,6), labels=ylabels)
   
 }
 
