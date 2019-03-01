@@ -44,3 +44,4 @@ blob_analysis_plot_worldpop_1k <- function(shapefile, pop_var, dataname, color =
 
 
 blob_analysis_plot_worldpop_1k(world_1k_2010_shp, pop_var = "AFR_PPP_2010_adj_v2", dataname = "WorldPOP 1k", color = 'blue')
+
