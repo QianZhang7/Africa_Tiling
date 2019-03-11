@@ -16,4 +16,8 @@ can't be perfectly matched, so I coded https://github.com/QianZhang7/Africa_Tili
 to rasterize it correctly.
 
 
-##
+## Figure 1: the Maps: levelplots for raster maps to show the original population surfaces
+
+
+## Figure 2: the CDFs vs area plot:
+https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/compare_pop_3.R
