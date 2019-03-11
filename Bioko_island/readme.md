@@ -17,6 +17,9 @@ to rasterize it correctly.
 
 
 ## Figure 1: the Maps: levelplots for raster maps to show the original population surfaces
+https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/plot_raster3.R
+
+Please note: in this code, MCDI has been plotted by using its shapefile format, but you can also try the above rasterize script and plot it as a raster map.
 
 
 ## Figure 2: the CDFs vs area plot:
