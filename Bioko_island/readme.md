@@ -24,3 +24,14 @@ Please note: in this code, MCDI has been plotted by using its shapefile format, 
 
 ## Figure 2: the CDFs vs area plot:
 https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/compare_pop_3.R
+
+## Figure 2b : Pdf
+Coming soon
+
+## Figure 3 Topology: Blob Analysis
+
+The function for blob analysis is: https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/blob_analysis_function.R
+
+And the code for the plots is: https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/blob_analysis_all.R
+
+The blob analysis of 100m WorldPOP is still under calculation. It needs to be run in parallel on a cluster. I will upload the scripts later.
