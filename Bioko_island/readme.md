@@ -50,3 +50,15 @@ Sh script: https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/
 
 To run it, please use commands ('{1..1000'} can be changed to loop though al the pixels in the raster map):
 for i in {1..1000}; do qsub -P proj_mmc big_adj.sh $i; done
+
+
+## Others
+
+MST-based clustering for small size shapefile: https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/adjacent.R
+
+Visualize MST-based clusters: https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/compare_mst.R
+
+Convert all data into points and save as csv files: https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/convert_to_csv.R
+
+Using R/leaflet for visualziation: https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/leaflet.R
+
