@@ -22,16 +22,31 @@ https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/plot_raster
 Please note: in this code, MCDI has been plotted by using its shapefile format, but you can also try the above rasterize script and plot it as a raster map.
 
 
-## Figure 2: the CDFs vs area plot:
+## Figure: the CDFs vs area plot:
 https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/compare_pop_3.R
 
-## Figure 2b : Pdf
+## Figure: Pdf
 Coming soon
 
-## Figure 3 Topology: Blob Analysis
+## Figure Topology: Blob Analysis
 
 The function for blob analysis is: https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/blob_analysis_function.R
 
 And the code for the plots is: https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/blob_analysis_all.R
 
 The blob analysis of 100m WorldPOP is still under calculation. It needs to be run in parallel on a cluster. I will upload the scripts later.
+
+## Figure Pfpr surface
+
+To get the levelplot and histograms for Pfpr, please see https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/raster_pr.R
+
+To get the levelplot and histograms for population-weighted pfpr, please see
+https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/pr_weighted_matched.R
+
+## Parallel computing to get the huge adjacency matrix for neighbouring information
+
+R script: https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/big_adj_col.R
+Sh script: https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/big_adj.sh
+
+To run it, please use commands ('{1..1000'} can be changed to loop though al the pixels in the raster map):
+for i in {1..1000}; do qsub -P proj_mmc big_adj.sh $i; done
