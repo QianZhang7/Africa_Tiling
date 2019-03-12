@@ -102,13 +102,13 @@ worldpop_pfpr <- data.frame(WorldPOP_Pr = values(worldpop_pr_mask_2))
 par(mfrow = c(1,3))
 g1 <- ggplot(mcdi_pfpr, aes(x = MCDI_Pr)) + 
   geom_histogram(aes(y = ..density..), binwidth = 0.01, colour = 'sky blue', fill = 'sky blue') + 
-  geom_density(colour = 'blue') +ylim(c(0,15))
+  geom_density(colour = 'blue') +ylim(c(0,21))
 g2 <- ggplot(landscan_pfpr, aes(x = Landscan_Pr)) + 
   geom_histogram(aes(y = ..density..), binwidth = 0.01, colour = 'light green', fill = 'light green') + 
-  geom_density(colour = 'dark green')+ylim(c(0,15))
+  geom_density(colour = 'dark green')+ylim(c(0,21))
 g3 <- ggplot(worldpop_pfpr, aes(x = WorldPOP_Pr)) + 
   geom_histogram(aes(y = ..density..), binwidth = 0.01, colour = 'orange', fill = 'orange') + 
-  geom_density(colour = 'red')+ylim(c(0,15))
+  geom_density(colour = 'red')+ylim(c(0,21))
 grid.arrange(g1, g2,g3, ncol=3)
 
 
