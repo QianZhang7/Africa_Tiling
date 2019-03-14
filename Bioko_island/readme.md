@@ -21,6 +21,9 @@ https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/plot_raster
 
 Please note: in this code, MCDI has been plotted by using its shapefile format, but you can also try the above rasterize script and plot it as a raster map.
 
+## Figure: Scatter plots for population comparison, by pixel
+
+https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/compare_scatter_plot.R
 
 ## Figure: the CDFs vs area plot:
 https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/compare_pop_3.R
