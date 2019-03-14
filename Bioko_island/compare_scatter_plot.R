@@ -78,29 +78,29 @@ plot_landscan_1k_log + theme(legend.position="none", plot.title = element_text(h
 
 ######### mcdi vs worldpop 100m #############################################
 
-landscan_1k_points = as.data.frame(rasterToPoints(landscan))
-coordinates(landscan_1k_points) <- ~ x + y
-landscan_1k_points$polygonid <- match_pnt_polygon(landscan_1k_points,mcdi1k_shp)
-landscan_1k_points$pop <- as.numeric(as.character(mcdi1k_shp$pop_num[landscan_1k_points$polygonid]))
+world_100_2010_points = as.data.frame(rasterToPoints(world_100_2010))
+coordinates(world_100_2010_points) <- ~ x + y
+world_100_2010_points$polygonid <- match_pnt_polygon(world_100_2010_points,mcdi100_shp)
+world_100_2010_points$pop <- as.numeric(as.character(mcdi1k_shp$pop_num[world_100_2010_points$polygonid]))
 
-zeros = intersect(which(is.na(landscan_1k_points$pop)),which(landscan_1k_points$dblbnd == 0))
-zero_percent = length(zeros)/length(landscan_1k_points$pop) *100
+zeros = intersect(which(is.na(world_100_2010_points$pop)),which(world_100_2010_points$GNQ10v2 == 0))
+zero_percent = length(zeros)/length(world_100_2010_points$pop) *100
 
-landscan_1k_points <- landscan_1k_points[-zeros,]
-landscan_1k_points$pop[is.na(landscan_1k_points$pop)] <- 0
-landscan_1k_points$jitter_pop <- landscan_1k_points$pop + jitter(rep(0.1, length(landscan_1k_points$pop)))
-landscan_1k_points$jitter_dblbnd <- landscan_1k_points$dblbnd + jitter(rep(0.1, length(landscan_1k_points$dblbnd)))
-plot_landscan_1k <- ggplot(as.data.frame(landscan_1k_points), aes(x = jitter_pop, y = jitter_dblbnd, color = 'green')) + geom_point()
-plot_landscan_1k_log <- plot_landscan_1k + scale_x_continuous(name="MCDI population", trans='log10', 
-                                                              breaks = trans_breaks("log10", function(x) 10^x),
-                                                              labels = trans_format("log10", math_format(10^.x))) +
-  scale_y_continuous(name="Landscan population", trans='log10', 
+world_100_2010_points <- world_100_2010_points[-zeros,]
+world_100_2010_points$pop[is.na(world_100_2010_points$pop)] <- 0
+world_100_2010_points$jitter_pop <- world_100_2010_points$pop + jitter(rep(0.1, length(world_100_2010_points$pop)))
+world_100_2010_points$jitter_GNQ10v2 <- world_100_2010_points$GNQ10v2 + jitter(rep(0.1, length(world_100_2010_points$GNQ10v2)))
+plot_worldpop_100 <- ggplot(as.data.frame(world_100_2010_points), aes(x = jitter_pop, y = jitter_GNQ10v2, color = 'blue')) + geom_point()
+plot_worldpop_100_log<- plot_worldpop_100 + scale_x_continuous(name="MCDI population", trans='log10', 
+                                                             breaks = trans_breaks("log10", function(x) 10^x),
+                                                             labels = trans_format("log10", math_format(10^.x))) +
+  scale_y_continuous(name="WorldPOP population", trans='log10', 
                      breaks = trans_breaks("log10", function(x) 10^x),
                      labels = trans_format("log10", math_format(10^.x)))+
   geom_vline(xintercept = 1, color = 'gray') + geom_hline(yintercept = 1, color = 'gray') +
-  scale_color_manual(values = 'dark green')
+  scale_color_manual(values = 'blue')
 
-plot_landscan_1k_log + theme(legend.position="none", plot.title = element_text(hjust = 0.5)) +
-  annotate("text", x = 0.35, y = 0.7, label = "55.00% cases \n are both 0s")+
-  ggtitle("MCDI vs Landscan (1km)")
+plot_worldpop_100_log + theme(legend.position="none", plot.title = element_text(hjust = 0.5)) +
+  annotate("text", x = 0.35, y = 0.7, label = "72.11% cases \n are both 0s")+
+  ggtitle("MCDI vs WorldPOP (100m)")
 
