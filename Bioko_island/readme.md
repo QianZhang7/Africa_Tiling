@@ -28,8 +28,11 @@ https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/compare_sca
 ## Figure: the CDFs vs area plot:
 https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/compare_pop_3.R
 
-## Figure: Pdf
-Coming soon
+## Figure: Pdf for original data and aggregated pixels
+
+To aggregate the pixels, please use https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/raster_aggregated.R
+And plot the pdf: https://github.com/QianZhang7/Africa_Tiling/blob/master/Bioko_island/pdf_density_population.R
+
 
 ## Figure Topology: Blob Analysis
 
