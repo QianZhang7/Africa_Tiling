@@ -28,4 +28,7 @@ raster_mcdi_100 <- rasterize(mcdi100_centers, r_100_grid, field = "mcdi100_shp.P
 
 mcdi_200_2010 <- aggregate(raster_mcdi_100,fact=2,fun=sum)
 mcdi_500_2010 <- aggregate(raster_mcdi_100,fact=5,fun=sum)
-
+mcdi_2k_2010 <- aggregate(raster_mcdi_1k,fact=2,fun=sum)
+mcdi_5k_2010 <- aggregate(raster_mcdi_1k,fact=5,fun=sum)
+world_2k_2010 <- aggregate(world_1k_2010,fact=2,fun=sum)
+world_5k_2010 <- aggregate(world_1k_2010,fact=5,fun=sum)
